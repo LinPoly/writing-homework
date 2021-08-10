@@ -1,0 +1,195 @@
+%% LyX 2.3.6.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{luainputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{babel}
+\begin{document}
+\title{Homework 6: Multiclass, Trees and Gradient Boosting}
+\author{Lin Pengyun}
+\maketitle
+
+\section{Reformulation of Multiclass Hinge Loss}
+
+\subsection{Multiclasss setting review}
+
+There is no question in this part.
+
+\subsection{Two version of multiclass hinge loss}
+\begin{enumerate}
+\item We have: 
+\[
+\max_{y\in\mathcal{Y}}f(y)=\max_{y\in\mathcal{Y}-\{y_{i}\}}\{\max[f(y_{i}),f(y)]\}
+\]
+\\
+If $\Delta(y,y)=0$, then $\Delta(y_{i},y_{i})+h(x_{i},y_{i})-h(x_{i},y_{i})=0$,
+we have: \\
+\\
+\begin{eqnarray*}
+\max_{y\in\mathcal{Y}}[\Delta(y_{i},y)+h(x_{i},y)-h(x_{i},y_{i})] & = & \max_{y\in\mathcal{Y}-\{y_{i}\}}\{\max[0,\Delta(y_{i},y)+h(x_{i},y)-h(x_{i},y_{i})]\}\\
+m_{i,y}(h) & = & h(x_{i},y_{i})-h(x_{i},y)
+\end{eqnarray*}
+\\
+So we have: \\
+\[
+\max_{y\in\mathcal{Y}}[\Delta(y_{i},y)+h(x_{i},y)-h(x_{i},y_{i})=\max_{y\in\mathcal{Y}-\{y_{i}\}}\{\max[0,\Delta(y_{i},y)-m_{i,y}(h)]\}
+\]
+\item If $\forall y\in\mathcal{Y},m_{i,y}(h)\ge\Delta(y_{i},y)$, we have:
+\\
+\[
+l_{1}(h,(x_{i},y_{i}))=l_{2}(h,(x_{i},y_{i}))=0
+\]
+\\
+The classification creteria is $f(x_{i})=\arg\max_{y\in\mathcal{Y}}h(x_{i},y)$,
+$m_{i,y}(h)=h(x_{i},y_{i})-h(x_{i},y)\ge0$ and the equality holds
+only when $y=y_{i}$.\\
+Hence, $f(x_{i})=y_{i}$ in the conditions decribed in this question.
+\end{enumerate}
+
+\section{SGD for Multiclass Linear SVM}
+\begin{enumerate}
+\item If for a set of functions $\{f_{1}(x),...,f_{n}(x)\}$, $f_{i}(x)$
+is convex function, then: \\
+\[
+\max_{i}f_{i}[\alpha x+(1-\alpha)y]\le\max_{i}\alpha f_{i}(x)+(1-\alpha)f_{i}(y)\le\alpha\max_{i}f_{i}(x)+(1-\alpha)\max_{i}f_{i}(y)
+\]
+\\
+So $\max_{i}f_{i}(x)$ is also convex.\\
+\[
+J(w)=\lambda w^{T}w+\frac{1}{n}\sum_{i=1}^{n}\max_{y\in\mathcal{Y}}[\Delta(y_{i},y)+<w,\Psi(x_{i},y)-\Psi(x_{i},y_{i})>]
+\]
+\\
+The norm and inner product of $w$ are both convex, for the additivity
+of convex function and max invariance shown before, $J(w)$ is also
+convex
+\item The subgradient of $\lambda w^{T}w$ w.r.t. $w$ is $2\lambda w$.\\
+Denote $\hat{y_{i}}$ as $\mathop{\arg\max}_{y\in\mathcal{Y}}[\Delta(y_{i},y)+<w,\Psi(x_{i},y)-\Psi(x_{i},y_{i})>]$,
+one of the subgradients of each $\max$ term is: \\
+\[
+\Psi(x_{i},\hat{y_{i}})-\Psi(x_{i},y_{i})
+\]
+\\
+So one subgradient of $J(w)$ could be: \\
+\[
+2\lambda w+\frac{1}{n}\sum_{i=1}^{n}\Psi(x_{i},\hat{y}_{i})-\Psi(x_{i},y_{i})
+\]
+\item According to 2, the subgradient on $(x_{i},y_{i})$ could be: \\
+\[
+2\lambda w+\Psi(x_{i},\hat{y}_{i})-\Psi(x_{i},y_{i})
+\]
+\item The minibatch subgradient based on $(x_{i},y_{i}),...,(x_{i+m},y_{i+m})$
+is: \\
+\[
+2\lambda w+\frac{1}{m}\sum_{k=i}^{i+m}\Psi(x_{i},\hat{y}_{i})-\Psi(x_{i},y_{i})
+\]
+\end{enumerate}
+
+\section{Hinge Loss is a Special Case of Generalized Hinge Loss}
+
+When the problem reduces to binary classification where the output
+space $\mathcal{Y}=\{-1,1\}$, the loss function on $(x_{i},y_{i})$
+is: \\
+\[
+\max_{y\in\{-1,1\}}[\Delta(y_{i},y)+h(x_{i},y)-h(x_{i},y_{i})]
+\]
+\\
+ Denote the score function of binary SVM is $g(x)$, let: \\
+\begin{align*}
+\Delta(-1,1) & =\Delta(1,-1)=1,\Delta(1,1)=\Delta(-1,-1)=0\\
+h(x_{i},y_{i}) & =\frac{y_{i}}{2}g(x_{i})
+\end{align*}
+\\
+$y\in\{-1,1\}=\{-y_{i},y_{i}\}$, the loss function will be: \\
+\[
+\max[0,1-y_{i}g(x)],
+\]
+\\
+which is as same as the that of binary SVM.
+
+\section{Multiclass classification--Implementation}
+
+\subsection{One-vs-All (or One-vs-Rest)}
+\begin{enumerate}
+\item Code is in another repository. The result is shown below.\\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw6/on_vs_all_svm}
+\end{enumerate}
+
+\subsection{Multiclass-SVM}
+\begin{enumerate}
+\item Code is in another repository. The result is shown below.\\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw6/multiclass_svm}
+\end{enumerate}
+
+\section{Audio Classification}
+
+This part is optional, now I just leave it unfinished.
+
+\section{Decision Tree Implementation}
+\begin{enumerate}
+\item The fitting result of classification decision tree is below: \\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw6/clf_tree}\\
+As the depth's growing, the fitting result is generally becoming better
+and better, but overfit appears in the last two pictures.
+\item The fitting result of regression tree w.r.t. one-dimensional data
+is below: \\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw6/rgr_tree}\\
+Fitting result goes better while overfit to noise aggravates as the
+depth grows.
+\end{enumerate}
+
+\section{Gradient Boosting Machine}
+\begin{enumerate}
+\item If the prediction function is $f(x)$ and the loss function is given
+by: \\
+\[
+l(y,\hat{y})=\frac{1}{2}(y-\hat{y})^{2},\hat{y}=f(x)
+\]
+\\
+then the partial derivative on $(x_{i},y_{i})$ w.r.t. the $(m-1)$'th
+round prediction function $f_{m-1}(x)$ is: \\
+\[
+\frac{\partial}{\partial f_{m-1}(x_{i})}l(y_{i},f_{m-1}(x_{i}))=f_{m-1}(x_{i})-y_{i},
+\]
+so the gradient of $g_{m}$ is: \\
+\[
+g_{m}=(f_{m-1}(x_{1})-y_{1},...f_{m-1}(x_{n})-y_{n})^{T}
+\]
+According to the gradient boosting algorithm, the function selected
+in $m$'th round should be: \\
+\begin{eqnarray*}
+h_{m} & = & \mathop{\arg\min}_{h\in\mathcal{F}}\sum_{i=1}^{n}[-g_{m,i}-h(x_{i})]^{2}\\
+ & = & \mathop{\arg\min}_{h\in\mathcal{F}}\sum_{i=1}^{n}[y_{i}-f_{m-1}(x_{i})-h(x_{i})]^{2}
+\end{eqnarray*}
+\\
+Therefore, in every round of iteration, the algorithm always finds
+the function which fits best the residual in the former round. 
+\item If the loss function is given by: \\
+\[
+l(y,f(x))=\ln(1+e^{-yf(x)}),
+\]
+the derivative w.r.t. $f_{m-1}(x)$ on $(x_{i},y_{i})$ is: \\
+\[
+\frac{\partial}{\partial f_{m-1}(x_{i})}l(y_{i},f_{m-1}(x_{i}))=-\dfrac{y_{i}}{1+e^{y_{i}f_{m-1}(x_{i})}}
+\]
+So we have: \\
+\[
+h_{m}=\mathop{\mathop{\arg\min}_{h\in\mathcal{F}}}\sum_{i=1}^{n}[\dfrac{y_{i}}{1+e^{y_{i}f_{m-1}(x_{i})}}-h(x_{i})]^{2}
+\]
+\end{enumerate}
+
+\section{Gradient Boosting--Implementataion}
+\begin{enumerate}
+\item In this question, an gradient boosting algorithm with $l_{2}$ loss
+and base prediciton function of decision tree is used to perform a
+classfication task on 2-D data and regression task on 1-D dataset.
+The result is below: \\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw6/GBT_clf}\\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw6/GBT_rgr}\\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw6/GBT_skl}\\
+The last diagram is the prediction result of gradient boosting algorithm
+in sklearn.
+\end{enumerate}
+
+\end{document}

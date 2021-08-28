@@ -1,0 +1,1029 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Homework 5: Conditional Probability Models
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+No question here.
+\end_layout
+
+\begin_layout Section
+From Scores to Conditional Probabilities
+\end_layout
+
+\begin_layout Enumerate
+We have: 
+\begin_inset Formula $y\in\{-1,1\}$
+\end_inset
+
+ and 
+\begin_inset Formula $\pi(x)=\mathbb{P}(y=1|x)$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+The conditional expectation of 
+\begin_inset Formula $l(yf(x))$
+\end_inset
+
+ is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\mathbb{E}_{y}[l(yf(x))|x] & = & l(f(x))\mathbb{P}(y=1|x)+l(-f(x))\mathbb{P}(y=-1|x)\\
+ & = & l(f(x))\pi(x)+l(-f(x))[1-\pi(x)]
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $l(y(f(x))=e^{-yf(x)}$
+\end_inset
+
+, we have: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\mathbb{E}_{y}[l(yf(x))] & = & e^{-yf(x)}\pi(x)+e^{yf(x)}[1-\pi(x)]\\
+ & \geq & 2\sqrt{\pi(x)[1-\pi(x)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The equality holds only when 
+\begin_inset Formula $e^{-yf(x)}\pi(x)=e^{yf(x)}[1-\pi(x)]$
+\end_inset
+
+, so 
+\begin_inset Formula $f^{*}(x)=\frac{1}{2}\ln\dfrac{\pi(x)}{[1-\pi(x)]}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+If 
+\begin_inset Formula $f^{*}(x)$
+\end_inset
+
+ is given, by simple algebraic operation, 
+\begin_inset Formula $\pi(x)=\dfrac{1}{1+e^{-2f^{*}(x)}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $l(y(f(x))=\ln(1+e^{-yf(x)})$
+\end_inset
+
+, the conditional expectation is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\mathbb{E}_{y}[l(yf(x))|x] & = & \ln(1+e^{-f(x)})\pi(x)+\ln(1+e^{f(x)})[1-\pi(x)]\\
+\frac{\partial}{\partial f}\mathrm{E} & = & \dfrac{-e^{-f(x)}\pi(x)}{1+e^{-f(x)}}+\dfrac{e^{f(x)}[1-\pi(x)]}{1+e^{f(x)}}\\
+ & = & \dfrac{e^{f(x)}[1-\pi(x)]-\pi(x)}{1-e^{f(x)}}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $f^{*}(x)$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $\dfrac{\partial}{\partial f^{*}}E=0$
+\end_inset
+
+, so: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+e^{f^{*}(x)}[1-\pi(x)] & = & \pi(x)\\
+f^{*}(x) & = & \ln\dfrac{\pi(x)}{1-\pi(x)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $l(y,f(x))=\max\{0,1-yf(x)\}$
+\end_inset
+
+, the conditional expectation is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathbb{E}_{y}[l(y,f(x))|x]=\max\{0,1-f(x)\}\pi(x)+\max\{0,1+f(x)\}[1-\pi(x)]
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Denote 
+\begin_inset Formula $\mathbb{E}_{y}[l(y,f(x))|x]$
+\end_inset
+
+ as 
+\begin_inset Formula $\mathsf{\mathrm{E}}$
+\end_inset
+
+, then: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\mathrm{E} & = & \begin{cases}
+[1+f(x)][1-\pi(x)] & f(x)>1\\
+1+f(x)-2f(x)\pi(x) & -1\le f(x)\le1\\{}
+[1-f(x)]\pi(x) & f(x)<-1
+\end{cases}\\
+\dfrac{\partial}{\partial f}\mathrm{E} & = & \begin{cases}
+1-\pi(x) & f(x)>1\\
+1-2\pi(x) & -1<f(x)<1\\
+-\pi(x) & f(x)<-1
+\end{cases}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\pi(x)$
+\end_inset
+
+ represents a probability, so 
+\begin_inset Formula $1-\pi(x)\ge0,-\pi(x)\le0$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $\mathrm{E}$
+\end_inset
+
+ reaches its maxima at 
+\begin_inset Formula $-1$
+\end_inset
+
+ when 
+\begin_inset Formula $1-2\pi(x)<0$
+\end_inset
+
+, at 
+\begin_inset Formula $1$
+\end_inset
+
+ when 
+\begin_inset Formula $1-2\pi(x)>0$
+\end_inset
+
+ and at any 
+\begin_inset Newline newline
+\end_inset
+
+points in 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+ when 
+\begin_inset Formula $\pi(x)=\dfrac{1}{2}$
+\end_inset
+
+.
+ Therefore, we have: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f^{*}(x)=\mathrm{sign}[1-2\pi(x)]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Logistic Regression
+\end_layout
+
+\begin_layout Subsection
+Equivalence of ERM and probabilistic model
+\end_layout
+
+\begin_layout Enumerate
+The ERM of the logistic loss function is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{R}(w)=\frac{1}{n}\sum_{i=1}^{n}\ln(1+e^{-y_{i}w^{T}x_{i}})
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The negative log likelihood of logistic probability is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+NLL(w) & = & -\sum_{i=0}^{n}\ln\dfrac{1}{1+e^{-y_{i}w^{T}x_{i}}}\\
+ & = & \sum_{i=0}^{n}\ln(1+e^{-y_{i}w^{T}x_{i}})
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Hence, minimizing the ERM is equivalent with minimizing negative log likelihood.
+\end_layout
+
+\begin_layout Subsection
+Numeric overflow and log-sum-exp trick
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $x^{*}=\max_{i}x_{i},i=1,...,n$
+\end_inset
+
+, then: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\ln(\sum_{i=1}^{n}e^{x_{i}}) & = & \ln(e^{x^{*}}\sum_{i=1}^{n}e^{x_{i}-x^{*}})\\
+ & = & x^{*}+\ln(\sum_{i=1}^{n}e^{x_{i}-x^{*}})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Because 
+\begin_inset Formula $x^{*}=\max_{i}x_{i},i=1,...,n$
+\end_inset
+
+, 
+\begin_inset Formula $x_{i}-x^{^{*}}\le0$
+\end_inset
+
+ and 
+\begin_inset Formula $e^{x_{i}-x^{*}}\le1$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Hence, the sum of exponential calculation will not overflow.
+\end_layout
+
+\begin_layout Enumerate
+At least one of 
+\begin_inset Formula $x_{i}-x^{*}$
+\end_inset
+
+ is 
+\begin_inset Formula $0$
+\end_inset
+
+ according to the definition of 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+, so 
+\begin_inset Formula $1<\sum_{i=1}^{n}e^{x_{i}-x^{*}}\le n$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Therefore, the logrithm calculation will not overflow.
+\end_layout
+
+\begin_layout Enumerate
+Just use the numpy logaddexp() function in this way: numpy.logaddexp(0, -s).
+\end_layout
+
+\begin_layout Subsection
+Regularized Logistic Regression
+\end_layout
+
+\begin_layout Enumerate
+Denote 
+\begin_inset Formula $\ln(1+e^{-yw^{T}x})$
+\end_inset
+
+ as 
+\begin_inset Formula $f(w)$
+\end_inset
+
+, so: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\nabla_{w}f(w) & = & \dfrac{-yx}{1+e^{yw^{T}x}}\\
+\mathbf{H}_{w}f(w) & = & \dfrac{y^{2}e^{yw^{T}x}}{(1+e^{yw^{T}x})^{2}}xx^{T}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The 2nd-order derivative w.r.t.
+ 
+\begin_inset Formula $w$
+\end_inset
+
+ is positive semi-definite, so 
+\begin_inset Formula $f(w)$
+\end_inset
+
+ is convex function.
+\end_layout
+
+\begin_layout Enumerate
+Programming question.
+\end_layout
+
+\begin_layout Enumerate
+Programming question.
+\end_layout
+
+\begin_layout Enumerate
+The values of negative log-likelihood against regularization parameters
+ are shown below: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename D:/Code_uc/Python_ML_Alg/figures/hw5/tuning_logistic.png
+	width 10cm
+	height 6.5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Bayesian Logistic Regression with Gaussian Prior
+\end_layout
+
+\begin_layout Enumerate
+Given the dataset 
+\begin_inset Formula $\mathcal{D}^{'}$
+\end_inset
+
+ , its negative log-likelihood 
+\begin_inset Formula $NLL_{\mathcal{D}^{'}}(w)$
+\end_inset
+
+ and prior density 
+\begin_inset Formula $p(w)$
+\end_inset
+
+, the posterior density is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+p(w|\mathcal{D}^{'})\propto\exp[-NLL_{\mathcal{D}^{'}}(w)]\cdot p(w)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $p(w)\sim\mathcal{N}(0,\Sigma)$
+\end_inset
+
+ and 
+\begin_inset Formula $w^{*}$
+\end_inset
+
+ is the MAP estimate of 
+\begin_inset Formula $w$
+\end_inset
+
+: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+w^{*} & = & \mathop{\arg\max}_{w}p(w|\mathcal{D}^{'})\\
+ & = & \mathop{\arg\max}_{w}\exp[-NLL_{\mathcal{D}^{'}}(w)]\cdot p(w)\\
+ & = & \mathop{\arg\max}_{w}-NLL_{\mathcal{D}^{'}}(w)+\ln p(w)\\
+ & = & \mathop{\arg\max}_{w}-NLL_{\mathcal{D}^{'}}(w)-w^{T}\Sigma^{-1}w/2\\
+ & = & \mathop{\arg\min}_{w}NLL_{\mathcal{D}^{'}}(w)+w^{T}\Sigma^{-1}w/2
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+If 
+\begin_inset Formula $\Sigma=\dfrac{1}{2n\lambda}I,\Sigma^{-1}=2n\lambda I$
+\end_inset
+
+, so: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+w^{*}=\mathop{\arg\min}_{w}\frac{1}{n}NLL_{\mathcal{D}^{'}}(w)+\lambda w^{T}w
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+which is exactly as same as the form of regularied logistic regression.
+\end_layout
+
+\begin_layout Enumerate
+As the result got in 4.2, 
+\begin_inset Formula $\Sigma=\dfrac{1}{2n\lambda}I$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+If 
+\begin_inset Formula $w\sim\mathcal{N}(0,I)$
+\end_inset
+
+, 
+\begin_inset Formula $2n\lambda=1$
+\end_inset
+
+,so 
+\begin_inset Formula $\lambda=\dfrac{1}{2n}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+In this way, regularized logistic regression is equivalent with MAP estimate
+ of bayesian regression.
+\end_layout
+
+\begin_layout Section
+Bayesian Linear Regression
+\end_layout
+
+\begin_layout Enumerate
+Programming question.
+\end_layout
+
+\begin_layout Enumerate
+Programming question.
+\end_layout
+
+\begin_layout Enumerate
+Programming question.
+\end_layout
+
+\begin_layout Enumerate
+The results of bayesian regression with three different settings are shown
+ below: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename D:/Code_uc/Python_ML_Alg/figures/hw5/plot_1.png
+	width 10cm
+	height 14cm
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename D:/Code_uc/Python_ML_Alg/figures/hw5/plot_2.png
+	width 10cm
+	height 14cm
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename D:/Code_uc/Python_ML_Alg/figures/hw5/plot_3.png
+	width 10cm
+	height 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Suppose 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ is sampled from 
+\begin_inset Formula $\mathcal{N}(w^{T}x_{i},2\sigma^{2})$
+\end_inset
+
+, denote 
+\begin_inset Formula $w^{*}$
+\end_inset
+
+ as the MAP estimate of 
+\begin_inset Formula $w$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+If the prior is 
+\begin_inset Formula $\mathcal{N}(0,\dfrac{1}{2}I)$
+\end_inset
+
+, then: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+w^{*} & = & \mathop{\arg\max}_{w}\mathsf{p}(\mathcal{D}|w)\mathsf{p}(w)\\
+ & = & \mathop{\arg\max}_{w}\ln[\mathsf{p}(\mathcal{D}|w)\mathsf{p}(w)]\\
+ & = & \mathop{\arg\min}_{w}\sum_{i=1}^{n}\dfrac{(y_{i}-w^{T}x_{i})^{2}}{2\sigma^{2}}+\frac{w^{t}(\frac{1}{2}I)^{-1}w}{2}\\
+ & = & \mathop{\arg\min}_{w}\sum_{i=1}^{n}(y_{i}-w^{T}x_{i})^{2}+2\sigma^{2}w^{T}w
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+which is equivalent with regularized ridge regression.
+ So just set regularization coefficient as 
+\begin_inset Formula $2\sigma^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+[Optional] Coin Flipping: Maximum Likelihood
+\end_layout
+
+\begin_layout Enumerate
+If the probability of head is 
+\begin_inset Formula $\theta$
+\end_inset
+
+, then: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathsf{p}(\mathcal{D}|\theta)=\theta^{2}(1-\theta)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The probability of 
+\begin_inset Formula $2$
+\end_inset
+
+ heads and 
+\begin_inset Formula $1$
+\end_inset
+
+ tail is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+C_{3}^{2}\theta^{2}(1-\theta)=3\theta^{2}(1-\theta)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The probability of 
+\begin_inset Formula $\eta_{h}$
+\end_inset
+
+ heads and 
+\begin_inset Formula $\eta_{t}$
+\end_inset
+
+ tails is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+C_{\eta_{h}+\eta_{t}}^{\eta_{t}}\theta^{\eta_{h}}(1-\theta)^{\eta_{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+To maximize the probability of the above question, denote 
+\begin_inset Formula $p(\theta)=\theta^{\eta_{h}}(1-\theta)^{\eta_{t}}$
+\end_inset
+
+: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\ln[p(\theta)] & = & \eta_{h}\ln\theta+\eta_{t}\ln(1-\theta)\\
+\frac{d}{d\theta}\ln[p(\theta)] & = & \frac{\eta_{h}}{\theta}-\frac{\eta_{t}}{1-\theta}\\
+ & = & \frac{\eta_{h}-(\eta_{t}+\eta_{h})\theta}{\theta(1-\theta)}\\
+\theta^{*} & = & \frac{\eta_{h}}{\eta_{t}+\eta_{h}}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+[Optional] Coin Flipping: Bayesian Approach with Beta Prior
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $\theta\sim Beta(h,t)$
+\end_inset
+
+ and the squence of flips 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ has 
+\begin_inset Formula $n_{h}$
+\end_inset
+
+ heads and 
+\begin_inset Formula $n_{t}$
+\end_inset
+
+ tails, then: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\mathsf{p}(\theta|\mathcal{D}) & \propto & \mathsf{p}(\mathcal{D}|\theta)\cdot\mathsf{p}(\theta)\\
+ & \propto & \theta^{n_{h}}(1-\theta)^{n_{t}}\theta^{h-1}(1-\theta)^{t-1}\\
+ & = & \theta^{n_{h}+h-1}(1-\theta)^{n_{t}+t-1}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+So 
+\begin_inset Formula $(\theta|\mathcal{D})\sim Beta(n_{h}+h,n_{t}+t)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For MAP estimate of 
+\begin_inset Formula $\theta$
+\end_inset
+
+: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\hat{\theta}_{MAP} & = & \mathop{\arg\max}_{\theta}\theta^{n_{h}+h-1}(1-\theta)^{n_{t}+t-1}\\
+ & = & \dfrac{n_{h}+h-1}{n_{h}+n_{t}+t+h-2}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+For MLE estimate of 
+\begin_inset Formula $\theta$
+\end_inset
+
+: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\hat{\theta}_{MLE} & = & \mathop{\arg\max}_{\theta}\theta^{n_{h}}(1-\theta)^{n_{t}}\\
+ & = & \dfrac{n_{h}}{n_{h}+n_{t}}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+For posterior mean estimate of 
+\begin_inset Formula $\theta$
+\end_inset
+
+: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\hat{\theta}_{PM} & = & \mathbb{E}(\theta|\mathcal{D})\\
+ & = & \frac{B(n_{t}+t+1,n_{h}+h)}{B(n_{t}+t,n_{h}+h)}\\
+ & = & \frac{\Gamma(n_{t}+t+1)\Gamma(n_{h}+h)}{\Gamma(n_{t}+t+n_{h}+h+1)}\bigg/\frac{\Gamma(n_{t}+t)\Gamma(n_{h}+h)}{\Gamma(n_{t}+t+n_{h}+h)}\\
+ & = & \frac{n_{t}+t}{n_{t}+t+n_{h}+h}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+When the number of coin flippings goes infinity, all the estimates of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ above is the true probability of heads.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{\theta}_{MLE}$
+\end_inset
+
+ is the unbiased estimate of 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+n_{h} & = & \sum_{i=1}^{n}1(X_{i}=1)\\
+n_{t}+n_{h} & = & n\\
+\mathbb{E}(X_{i}) & = & \theta
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $X_{i},i=1,...,n$
+\end_inset
+
+ are independent variables so the expectation of 
+\begin_inset Formula $\hat{\theta}_{MLE}$
+\end_inset
+
+ is: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathbb{E}(\hat{\theta}_{MLE})=\frac{\theta n}{n}=\theta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+I prefer PM estimate because it is more flexible to ultilize prior knowledge.
+\begin_inset Newline newline
+\end_inset
+
+For this question, because there is no particular reason to believe the
+ coin is unfair, the prior must be symmetric along 
+\begin_inset Formula $\theta=\frac{1}{2}$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+I may choose 
+\begin_inset Formula $Beta(0,0)$
+\end_inset
+
+ as the prior.
+\end_layout
+
+\end_body
+\end_document

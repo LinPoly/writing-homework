@@ -35,4 +35,16 @@ This project is still ongoing now.
 
 ### Homework5  
 
+(1) Loss Function for Probabilistic Models: Derive bayesian optimal functions for four loss functions in the setting of binary classification.  
+(2) Logistic Regression: Show the equivalence between ERM of logistic loss function and negative log-likelihood. Tackle numeric overflow of log-sum-exp.Prove the convexity of logistic loss function.  
+(3) Bayesian Logistic Regression: Derive the posterior of baysian logistic function and  show the equivalence between bayesian logistic regression and regularized logistic regression.  
+(4) Bayesian Linear Regression: Derive the expression of bayesian linear regression and show the equivalence between it and regularized ridge regression.  
+(5) Coin Flipping: Estimate probability of head with maximum likelihood approach and bayesian approach with Beta distribution prior.  
+  
+### Homework 6  
+  
+(1) Multiclass Hinge Loss: Analyze generalized hinge loss and its special form.  
+(2) SGD for Multiclass SVM: Show the objective function is convex and derive the subgradient descent algorithm for multiclass SVM.
+(3) Multiclass SVM and Decision Tree: Analyze the result of programming homework.  
+(4) Gradient Boosting: Derive the algorithm for L2-boosting and logistic loss boosting.  
 **Still ongoing.**

@@ -1,0 +1,263 @@
+%% LyX 2.3.6.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{luainputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{babel}
+\begin{document}
+\title{Homework 5: Conditional Probability Models}
+\maketitle
+
+\section{Introduction}
+
+No question here.
+
+\section{From Scores to Conditional Probabilities}
+\begin{enumerate}
+\item We have: $y\in\{-1,1\}$ and $\pi(x)=\mathbb{P}(y=1|x)$.\\
+The conditional expectation of $l(yf(x))$ is: \\
+\begin{eqnarray*}
+\mathbb{E}_{y}[l(yf(x))|x] & = & l(f(x))\mathbb{P}(y=1|x)+l(-f(x))\mathbb{P}(y=-1|x)\\
+ & = & l(f(x))\pi(x)+l(-f(x))[1-\pi(x)]
+\end{eqnarray*}
+\item If $l(y(f(x))=e^{-yf(x)}$, we have: \\
+\begin{eqnarray*}
+\mathbb{E}_{y}[l(yf(x))] & = & e^{-yf(x)}\pi(x)+e^{yf(x)}[1-\pi(x)]\\
+ & \geq & 2\sqrt{\pi(x)[1-\pi(x)}
+\end{eqnarray*}
+\\
+The equality holds only when $e^{-yf(x)}\pi(x)=e^{yf(x)}[1-\pi(x)]$,
+so $f^{*}(x)=\frac{1}{2}\ln\dfrac{\pi(x)}{[1-\pi(x)]}$.\\
+If $f^{*}(x)$ is given, by simple algebraic operation, $\pi(x)=\dfrac{1}{1+e^{-2f^{*}(x)}}$.
+\item If $l(y(f(x))=\ln(1+e^{-yf(x)})$, the conditional expectation is:
+\\
+\begin{eqnarray*}
+\mathbb{E}_{y}[l(yf(x))|x] & = & \ln(1+e^{-f(x)})\pi(x)+\ln(1+e^{f(x)})[1-\pi(x)]\\
+\frac{\partial}{\partial f}\mathrm{E} & = & \dfrac{-e^{-f(x)}\pi(x)}{1+e^{-f(x)}}+\dfrac{e^{f(x)}[1-\pi(x)]}{1+e^{f(x)}}\\
+ & = & \dfrac{e^{f(x)}[1-\pi(x)]-\pi(x)}{1-e^{f(x)}}
+\end{eqnarray*}
+\\
+$f^{*}(x)$ satisfies $\dfrac{\partial}{\partial f^{*}}E=0$, so:
+\\
+\begin{eqnarray*}
+e^{f^{*}(x)}[1-\pi(x)] & = & \pi(x)\\
+f^{*}(x) & = & \ln\dfrac{\pi(x)}{1-\pi(x)}
+\end{eqnarray*}
+\item If $l(y,f(x))=\max\{0,1-yf(x)\}$, the conditional expectation is:
+\\
+\[
+\mathbb{E}_{y}[l(y,f(x))|x]=\max\{0,1-f(x)\}\pi(x)+\max\{0,1+f(x)\}[1-\pi(x)]
+\]
+\\
+Denote $\mathbb{E}_{y}[l(y,f(x))|x]$ as $\mathsf{\mathrm{E}}$, then:
+\\
+\begin{eqnarray*}
+\mathrm{E} & = & \begin{cases}
+[1+f(x)][1-\pi(x)] & f(x)>1\\
+1+f(x)-2f(x)\pi(x) & -1\le f(x)\le1\\{}
+[1-f(x)]\pi(x) & f(x)<-1
+\end{cases}\\
+\dfrac{\partial}{\partial f}\mathrm{E} & = & \begin{cases}
+1-\pi(x) & f(x)>1\\
+1-2\pi(x) & -1<f(x)<1\\
+-\pi(x) & f(x)<-1
+\end{cases}
+\end{eqnarray*}
+\\
+$\pi(x)$ represents a probability, so $1-\pi(x)\ge0,-\pi(x)\le0$.
+Hence, $\mathrm{E}$ reaches its maxima at $-1$ when $1-2\pi(x)<0$,
+at $1$ when $1-2\pi(x)>0$ and at any \\
+points in $[-1,1]$ when $\pi(x)=\dfrac{1}{2}$. Therefore, we have:
+\\
+\[
+f^{*}(x)=\mathrm{sign}[1-2\pi(x)]
+\]
+\end{enumerate}
+
+\section{Logistic Regression}
+
+\subsection{Equivalence of ERM and probabilistic model}
+\begin{enumerate}
+\item The ERM of the logistic loss function is: \\
+\[
+\hat{R}(w)=\frac{1}{n}\sum_{i=1}^{n}\ln(1+e^{-y_{i}w^{T}x_{i}})
+\]
+\\
+The negative log likelihood of logistic probability is: \\
+\begin{eqnarray*}
+NLL(w) & = & -\sum_{i=0}^{n}\ln\dfrac{1}{1+e^{-y_{i}w^{T}x_{i}}}\\
+ & = & \sum_{i=0}^{n}\ln(1+e^{-y_{i}w^{T}x_{i}})
+\end{eqnarray*}
+\\
+Hence, minimizing the ERM is equivalent with minimizing negative log
+likelihood.
+\end{enumerate}
+
+\subsection{Numeric overflow and log-sum-exp trick}
+\begin{enumerate}
+\item Let $x^{*}=\max_{i}x_{i},i=1,...,n$, then: \\
+\begin{eqnarray*}
+\ln(\sum_{i=1}^{n}e^{x_{i}}) & = & \ln(e^{x^{*}}\sum_{i=1}^{n}e^{x_{i}-x^{*}})\\
+ & = & x^{*}+\ln(\sum_{i=1}^{n}e^{x_{i}-x^{*}})
+\end{eqnarray*}
+\item Because $x^{*}=\max_{i}x_{i},i=1,...,n$, $x_{i}-x^{^{*}}\le0$ and
+$e^{x_{i}-x^{*}}\le1$.\\
+Hence, the sum of exponential calculation will not overflow.
+\item At least one of $x_{i}-x^{*}$ is $0$ according to the definition
+of $x^{*}$, so $1<\sum_{i=1}^{n}e^{x_{i}-x^{*}}\le n$.\\
+Therefore, the logrithm calculation will not overflow.
+\item Just use the numpy logaddexp() function in this way: numpy.logaddexp(0,
+-s).
+\end{enumerate}
+
+\subsection{Regularized Logistic Regression}
+\begin{enumerate}
+\item Denote $\ln(1+e^{-yw^{T}x})$ as $f(w)$, so: \\
+\begin{eqnarray*}
+\nabla_{w}f(w) & = & \dfrac{-yx}{1+e^{yw^{T}x}}\\
+\mathbf{H}_{w}f(w) & = & \dfrac{y^{2}e^{yw^{T}x}}{(1+e^{yw^{T}x})^{2}}xx^{T}
+\end{eqnarray*}
+\\
+The 2nd-order derivative w.r.t. $w$ is positive semi-definite, so
+$f(w)$ is convex function.
+\item Programming question.
+\item Programming question.
+\item The values of negative log-likelihood against regularization parameters
+are shown below: \\
+\includegraphics[width=10cm,height=6.5cm]{D:/Code_uc/Python_ML_Alg/figures/hw5/tuning_logistic}
+\end{enumerate}
+
+\section{Bayesian Logistic Regression with Gaussian Prior}
+\begin{enumerate}
+\item Given the dataset $\mathcal{D}^{'}$ , its negative log-likelihood
+$NLL_{\mathcal{D}^{'}}(w)$ and prior density $p(w)$, the posterior
+density is: \\
+\[
+p(w|\mathcal{D}^{'})\propto\exp[-NLL_{\mathcal{D}^{'}}(w)]\cdot p(w)
+\]
+\item If $p(w)\sim\mathcal{N}(0,\Sigma)$ and $w^{*}$ is the MAP estimate
+of $w$: \\
+\begin{eqnarray*}
+w^{*} & = & \mathop{\arg\max}_{w}p(w|\mathcal{D}^{'})\\
+ & = & \mathop{\arg\max}_{w}\exp[-NLL_{\mathcal{D}^{'}}(w)]\cdot p(w)\\
+ & = & \mathop{\arg\max}_{w}-NLL_{\mathcal{D}^{'}}(w)+\ln p(w)\\
+ & = & \mathop{\arg\max}_{w}-NLL_{\mathcal{D}^{'}}(w)-w^{T}\Sigma^{-1}w/2\\
+ & = & \mathop{\arg\min}_{w}NLL_{\mathcal{D}^{'}}(w)+w^{T}\Sigma^{-1}w/2
+\end{eqnarray*}
+\\
+If $\Sigma=\dfrac{1}{2n\lambda}I,\Sigma^{-1}=2n\lambda I$, so: \\
+\[
+w^{*}=\mathop{\arg\min}_{w}\frac{1}{n}NLL_{\mathcal{D}^{'}}(w)+\lambda w^{T}w
+\]
+\\
+which is exactly as same as the form of regularied logistic regression.
+\item As the result got in 4.2, $\Sigma=\dfrac{1}{2n\lambda}I$.\\
+If $w\sim\mathcal{N}(0,I)$, $2n\lambda=1$,so $\lambda=\dfrac{1}{2n}$.\\
+In this way, regularized logistic regression is equivalent with MAP
+estimate of bayesian regression.
+\end{enumerate}
+
+\section{Bayesian Linear Regression}
+\begin{enumerate}
+\item Programming question.
+\item Programming question.
+\item Programming question.
+\item The results of bayesian regression with three different settings are
+shown below: \\
+\includegraphics[width=10cm,height=14cm]{D:/Code_uc/Python_ML_Alg/figures/hw5/plot_1}\\
+\includegraphics[width=10cm,height=14cm]{D:/Code_uc/Python_ML_Alg/figures/hw5/plot_2}\\
+\includegraphics[width=10cm,height=14cm]{D:/Code_uc/Python_ML_Alg/figures/hw5/plot_3}
+\item Suppose $y_{i}$ is sampled from $\mathcal{N}(w^{T}x_{i},2\sigma^{2})$,
+denote $w^{*}$ as the MAP estimate of $w$.\\
+If the prior is $\mathcal{N}(0,\dfrac{1}{2}I)$, then: \\
+\begin{eqnarray*}
+w^{*} & = & \mathop{\arg\max}_{w}\mathsf{p}(\mathcal{D}|w)\mathsf{p}(w)\\
+ & = & \mathop{\arg\max}_{w}\ln[\mathsf{p}(\mathcal{D}|w)\mathsf{p}(w)]\\
+ & = & \mathop{\arg\min}_{w}\sum_{i=1}^{n}\dfrac{(y_{i}-w^{T}x_{i})^{2}}{2\sigma^{2}}+\frac{w^{t}(\frac{1}{2}I)^{-1}w}{2}\\
+ & = & \mathop{\arg\min}_{w}\sum_{i=1}^{n}(y_{i}-w^{T}x_{i})^{2}+2\sigma^{2}w^{T}w
+\end{eqnarray*}
+\\
+which is equivalent with regularized ridge regression. So just set
+regularization coefficient as $2\sigma^{2}$.
+\end{enumerate}
+
+\section{{[}Optional{]} Coin Flipping: Maximum Likelihood}
+\begin{enumerate}
+\item If the probability of head is $\theta$, then: \\
+\[
+\mathsf{p}(\mathcal{D}|\theta)=\theta^{2}(1-\theta)
+\]
+\item The probability of $2$ heads and $1$ tail is: \\
+\[
+C_{3}^{2}\theta^{2}(1-\theta)=3\theta^{2}(1-\theta)
+\]
+\item The probability of $\eta_{h}$ heads and $\eta_{t}$ tails is: \\
+\[
+C_{\eta_{h}+\eta_{t}}^{\eta_{t}}\theta^{\eta_{h}}(1-\theta)^{\eta_{t}}
+\]
+\item To maximize the probability of the above question, denote $p(\theta)=\theta^{\eta_{h}}(1-\theta)^{\eta_{t}}$:
+\\
+\begin{eqnarray*}
+\ln[p(\theta)] & = & \eta_{h}\ln\theta+\eta_{t}\ln(1-\theta)\\
+\frac{d}{d\theta}\ln[p(\theta)] & = & \frac{\eta_{h}}{\theta}-\frac{\eta_{t}}{1-\theta}\\
+ & = & \frac{\eta_{h}-(\eta_{t}+\eta_{h})\theta}{\theta(1-\theta)}\\
+\theta^{*} & = & \frac{\eta_{h}}{\eta_{t}+\eta_{h}}
+\end{eqnarray*}
+\end{enumerate}
+
+\section{{[}Optional{]} Coin Flipping: Bayesian Approach with Beta Prior}
+\begin{enumerate}
+\item If $\theta\sim Beta(h,t)$ and the squence of flips $\mathcal{D}$
+has $n_{h}$ heads and $n_{t}$ tails, then: \\
+\begin{eqnarray*}
+\mathsf{p}(\theta|\mathcal{D}) & \propto & \mathsf{p}(\mathcal{D}|\theta)\cdot\mathsf{p}(\theta)\\
+ & \propto & \theta^{n_{h}}(1-\theta)^{n_{t}}\theta^{h-1}(1-\theta)^{t-1}\\
+ & = & \theta^{n_{h}+h-1}(1-\theta)^{n_{t}+t-1}
+\end{eqnarray*}
+\\
+So $(\theta|\mathcal{D})\sim Beta(n_{h}+h,n_{t}+t)$.
+\item For MAP estimate of $\theta$: \\
+\begin{eqnarray*}
+\hat{\theta}_{MAP} & = & \mathop{\arg\max}_{\theta}\theta^{n_{h}+h-1}(1-\theta)^{n_{t}+t-1}\\
+ & = & \dfrac{n_{h}+h-1}{n_{h}+n_{t}+t+h-2}
+\end{eqnarray*}
+\\
+For MLE estimate of $\theta$: \\
+\begin{eqnarray*}
+\hat{\theta}_{MLE} & = & \mathop{\arg\max}_{\theta}\theta^{n_{h}}(1-\theta)^{n_{t}}\\
+ & = & \dfrac{n_{h}}{n_{h}+n_{t}}
+\end{eqnarray*}
+\\
+For posterior mean estimate of $\theta$: \\
+\begin{eqnarray*}
+\hat{\theta}_{PM} & = & \mathbb{E}(\theta|\mathcal{D})\\
+ & = & \frac{B(n_{t}+t+1,n_{h}+h)}{B(n_{t}+t,n_{h}+h)}\\
+ & = & \frac{\Gamma(n_{t}+t+1)\Gamma(n_{h}+h)}{\Gamma(n_{t}+t+n_{h}+h+1)}\bigg/\frac{\Gamma(n_{t}+t)\Gamma(n_{h}+h)}{\Gamma(n_{t}+t+n_{h}+h)}\\
+ & = & \frac{n_{t}+t}{n_{t}+t+n_{h}+h}
+\end{eqnarray*}
+\item When the number of coin flippings goes infinity, all the estimates
+of $\theta$ above is the true probability of heads.
+\item $\hat{\theta}_{MLE}$ is the unbiased estimate of $\theta$.\\
+\begin{eqnarray*}
+n_{h} & = & \sum_{i=1}^{n}1(X_{i}=1)\\
+n_{t}+n_{h} & = & n\\
+\mathbb{E}(X_{i}) & = & \theta
+\end{eqnarray*}
+\\
+$X_{i},i=1,...,n$ are independent variables so the expectation of
+$\hat{\theta}_{MLE}$ is: \\
+\[
+\mathbb{E}(\hat{\theta}_{MLE})=\frac{\theta n}{n}=\theta
+\]
+\item I prefer PM estimate because it is more flexible to ultilize prior
+knowledge.\\
+For this question, because there is no particular reason to believe
+the coin is unfair, the prior must be symmetric along $\theta=\frac{1}{2}$.
+\\
+I may choose $Beta(0,0)$ as the prior.
+\end{enumerate}
+
+\end{document}
